@@ -39,13 +39,15 @@ extrair_cnpj() {
 # Verifica arquivos em cada diretório
 for DIR in "${DIRS[@]}"; do
     if [ -d "$DIR" ]; then
+    
         # Encontra arquivos que chegaram hoje
-        arquivos=$(find "$DIR" -type f -newermt "$DATA_HOJE 00:00:00" ! -newermt "$DATA_HOJE 23:59:59")
-        
-        for arquivo in $arquivos; do
-            nome_arquivo=$(basename "$arquivo")
-            cnpj=$(extrair_cnpj "$arquivo")
-            echo "$nome_arquivo,$cnpj" >> $PLANILHA
+        ARQUIVOS=$(find "$DIR" -type f -newermt "$DATA_HOJE 00:00:00" ! -newermt "$DATA_HOJE 23:59:59")
+
+        # Gera a planilha
+        for arquivo in $ARQUIVOS; do
+            NOME_ARQUIVO=$(basename "$arquivo")
+            CNPJ=$(extrair_cnpj "$arquivo")
+            echo "$NOME_ARQUIVO,$CNPJ" >> $PLANILHA
         done
     fi
 done
