@@ -7,10 +7,10 @@ O script busca arquivos que chegaram hoje nos diretórios especificados, cria um
 
 ## Uso
 
-### 1.Script Shell
+### 1. Script Shell
   - Salvar o script como QuarentenaZero.sh
 
-### 2.Permissões
+### 2. Permissões
   - Certifique-se de que o script possui permissão de execução:
   - chmod +x criar_planilha.sh
 
