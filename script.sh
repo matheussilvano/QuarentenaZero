@@ -1,4 +1,4 @@
-#!/bin/bash
+v #!/bin/bash
 
 #############################################
 #
@@ -14,13 +14,13 @@
 #######################################################
 
 # Cria uma variavel com os diretorios
-DIRS=(".QUARENTENA/mailbox" "OPERADORAS.SEMRELACIONAMENTO/sent")
-
-# Cria uma variavel para a planilha
-PLANILHA="planilha-quarentena0.csv"
+DIRS=("/home/skyline/QUARENTENA/mailbox" "/home/skyline/OPERADORAS.SEMRELACIONAMENTO/sent")
 
 # Cria uma variavel para a data de hoje
 DATA_HOJE=$(date +%Y-%m-%d)
+
+# Cria uma variavel para a planilha
+PLANILHA="/home/matheus.silvano/planilha-quarentena0$DATA_HOJE.csv"
 
 # Cria um cabeçalho para a planilha
 echo "Nome do Arquivo,CNPJ" > $PLANILHA
@@ -38,11 +38,10 @@ extrair_cnpj() {
 
 # Verifica arquivos em cada diretório
 for DIR in "${DIRS[@]}"; do
-    if [ -d "$DIR" ]; then
-    
-        # Encontra arquivos que chegaram hoje
-        ARQUIVOS=$(find "$DIR" -type f -newermt "$DATA_HOJE 00:00:00" ! -newermt "$DATA_HOJE 23:59:59")
+    if [ -d $DIR ]; then
 
+        # Encontra arquivos que chegaram hoje
+        ARQUIVOS=$(find "$DIR" -type f -mtime 0)
         # Gera a planilha
         for arquivo in $ARQUIVOS; do
             NOME_ARQUIVO=$(basename "$arquivo")
@@ -54,5 +53,3 @@ done
 
 # Dá um retorno
 echo "Planilha criada: $PLANILHA"
-
-
